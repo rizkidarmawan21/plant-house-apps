@@ -1,0 +1,71 @@
+.monitoring {
+  color: #185350;
+  padding: 24px;
+  h3 {
+    font-weight: bold;
+    text-align: center;
+  }
+  h6 {
+    font-weight: 600;
+    background-color: #b9d5cf;
+    padding: 8px;
+    border-radius: 5px;
+  }
+  span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #185350 !important;
+  }
+  .Pemantauan {
+    border-bottom: 2px solid;
+    width: 68%;
+  }
+  .card {
+    max-width: 200px;
+    margin: 0 10px;
+  }
+  .colon {
+    font-size: 2em;
+  }
+
+  .border-bottom {
+    border-bottom: solid 2px !important;
+  }
+
+  .border {
+    border-radius: 5px;
+  }
+  .condition {
+    background-color: #b9d5cf;
+    border-radius: 15px;
+    padding: 1rem;
+    max-width: 250px;
+    font-weight: bold;
+  }
+  .condition p {
+    background-color: #fffdfd;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+  #hour,
+  #minute,
+  #second {
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 32px;
+    background-color: #185350;
+    color: white !important;
+  }
+}
+
+.monitoring,
+h5 {
+  font-weight: 600 !important;
+}
+
+.pemasaran {
+  border-top: solid 2px;
+  font-weight: 600 !important;
+}

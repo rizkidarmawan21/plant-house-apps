@@ -1,0 +1,11 @@
+.dashboard-user {
+  .profile-pic {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    object-fit: cover;
+  }
+  .card-body {
+    font-size: 16px !important;
+  }
+}

@@ -1,0 +1,28 @@
+.find-us {
+  background-color: #185350;
+  padding: 3rem;
+  font-size: 14px;
+
+  .market {
+    @include media-breakpoint-down(md) {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+}
+
+.copyright {
+  color: #185350;
+  font-size: 14px;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.alamat-toko {
+  @include media-breakpoint-up(md) {
+    padding: 0 6rem;
+  }
+  @include media-breakpoint-up(lg) {
+    padding: 0 15rem;
+  }
+}

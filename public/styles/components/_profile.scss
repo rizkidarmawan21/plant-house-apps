@@ -1,0 +1,20 @@
+.argha-profile {
+  color: #185350;
+
+  h5 {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  p {
+    font-size: 14px;
+  }
+  .experience h3 {
+    margin-bottom: 0px;
+    font-weight: 600;
+  }
+  @include media-breakpoint-down(sm) {
+    .img-profile {
+      padding: 2rem 2rem 0rem 2rem;
+    }
+  }
+}

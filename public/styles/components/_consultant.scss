@@ -1,0 +1,90 @@
+.store-consultant {
+  padding: 3rem;
+  color: #185350;
+  // height: 13rem;
+  // top: -7rem;
+  // position: relative;
+
+  .card-consultant {
+    background-color: #b9d5cf;
+    top: -7rem;
+  }
+
+  .card-text-consultant {
+    font-size: 14px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #185350;
+    font-weight: 600;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: 14px;
+    padding: 0.5rem;
+    // height: 0rem;
+
+    .card-title-consultant {
+      font-size: 17px !important;
+      font-weight: 600;
+    }
+
+    .card-title-consultant {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card-consultant {
+      height: 200px;
+      top: 0rem;
+    }
+
+    .set-height {
+      height: auto !important;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    font-size: 14px;
+    padding: 1.5rem;
+    // height: 13rem;
+
+    h5.card-title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .card-consultant {
+      height: 260px;
+    }
+    .set-height {
+      height: 7rem;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    .argha-profile {
+      margin-top: 5rem;
+    }
+  }
+
+  .card {
+    height: 100%; /* ketinggian sama untuk semua cards */
+  }
+
+  .card-body {
+    overflow: hidden; /* mengatur overflow agar konten tidak keluar dari cards */
+    justify-content: space-between;
+  }
+}
+
+.card-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.card-img-top {
+  object-fit: cover;
+  height: 100%;
+}
