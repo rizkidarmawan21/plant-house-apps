@@ -47,7 +47,16 @@
                                             <ul class="dropdown-menu">
                                                 <li><a href="{{ route('admin.product.variant.edit', $item->id) }}"
                                                         class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                <li>
+                                                    <form
+                                                        action="{{ route('admin.product.variant.destroy', $item->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="dropdown-item"
+                                                            href="#">Delete</button>
+                                                    </form>
+                                                </li>
                                             </ul>
                                         </div>
                                     </td>

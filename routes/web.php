@@ -63,6 +63,7 @@ Route::controller(CheckoutController::class)->prefix('checkout')->name('checkout
 
 Route::prefix('user')->name('user.')->group(function () {
     Route::get('/', [UserController::class, 'index'])->name('profile');
+    Route::put('/', [UserController::class, 'update'])->name('update');
 
     Route::controller(MyTransactionController::class)->middleware('auth')->prefix('transaction')->name('transaction.')->group(function () {
         Route::get('/', 'index')->name('index');
@@ -95,6 +96,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'isAdmin'])->group(f
         Route::post('store/{product}', 'store')->name('store');
         Route::get('edit/{variant}', 'edit')->name('edit');
         Route::put('update/{variant}', 'update')->name('update');
+        Route::delete('delete/{variant}', 'destroy')->name('destroy');
     });
 
     Route::resource('transaction', Transaction::class);

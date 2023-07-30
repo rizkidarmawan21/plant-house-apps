@@ -81,8 +81,10 @@ class ProductVariantController extends Controller
      * @param  \App\Models\ProductVariant  $productVariant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductVariant $productVariant)
+    public function destroy(ProductVariant $variant)
     {
-        //
+        $variant->delete();
+
+        return redirect()->route('admin.product.show', $variant->product_id)->with('success', 'Product variant successfully deleted');
     }
 }

@@ -31,23 +31,42 @@ class CartController extends Controller
     public function store(Product $product, Request $request)
     {
         $variant_id = $request->variant_id;
+
+        $rules = [
+                'quantity' => 'required|integer'
+            ];
+
+        if ($product->variants) {
+            $rules = [
+                'variant_id' => 'required'
+            ];
+        }
+
+        $request->validate($rules);
+        
         // check if variant id send from request
-        if ($variant_id) {
+        if ($product->variants) {
             // if product variant ready check stock is ready or not
             $productVariant = ProductVariant::findOrFail($variant_id);
             if ($productVariant->stock == 0) {
                 return redirect()->back()->with('error', 'Maaf, produk ini sudah habis');
             }
+
+            if ($productVariant->stock < $request->quantity) {
+                return redirect()->back()->with('error', 'Maaf, stok produk ini tidak mencukupi');
+            }
         } else {
             if ($product->stock == 0) {
                 return redirect()->back()->with('error', 'Maaf, produk ini sudah habis');
             }
+
+            if ($product->stock < $request->quantity) {
+                return redirect()->back()->with('error', 'Maaf, stok produk ini tidak mencukupi');
+            }
         }
 
-        $request->validate([
-            'quantity' => 'required|integer'
-        ]);
 
+       
 
         try {
             // check if product is already in cart

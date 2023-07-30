@@ -51,7 +51,7 @@
                                                 @endif
                                             </div>
                                             <span class="d-none"
-                                                id="stock-{{ $item->id }}">{{ $item->product->stock }}</span>
+                                                id="stock-{{ $item->id }}">{{ $item->variant ? $item->variant->stock : $item->product->stock }}</span>
                                         </td>
                                         <td style="width: 20%">
                                             <div class="d-flex gap-2 mt-3">
@@ -62,7 +62,7 @@
                                                     class="form-control text-center" value="{{ $item->quantity }}" readonly
                                                     style="width:50px; height:30px">
                                                 <button type="button" class="btn btn-sm btn-plus btn-secondary"
-                                                    @click="increment({{ $item->id }},{{ $item->product->stock }})">+</button>
+                                                    @click="increment({{ $item->id }},{{ $item->variant ? $item->variant->stock : $item->product->stock }})">+</button>
                                             </div>
                                         </td>
                                         <td style="width: 10%">
@@ -439,7 +439,7 @@
 
                     let qty = $(`#qty-${id}`);
 
-                    if (qty.val() > max_stock) {
+                    if (qty.val() >= max_stock) {
                         $(`#btn-plus-${id}`).prop('disabled', true);
                     } else {
                         let count = parseInt(qty.val(), 10); // Menambahkan basis 10 untuk parsing ke integer

@@ -11,7 +11,7 @@ class Product extends Model
 {
     use HasFactory, Sluggable, SoftDeletes;
 
-    protected $fillable = ["name", "slug", "price", "stock", "description", "category_id"];
+    protected $guarded = ['id'];
 
     protected $with = ["galleries", 'category', 'variants'];
 

@@ -10,7 +10,6 @@
             Products</a>
         <a href="{{ route('admin.transaction.index') }}" class="list-group-item list-group-item-action">Transactions</a>
         <a href="{{ route('admin.article.index') }}" class="list-group-item list-group-item-action">Article</a>
-        <a href="/dashboard-account.html" class="list-group-item list-group-item-action">My Account</a>
     </div>
 </div>
 <!-- /#sidebar-wrapper -->

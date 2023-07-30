@@ -15,16 +15,8 @@
                     <div class="col-md-4">
                         <div class="card mb-2">
                             <div class="card-body">
-                                <div class="dashboard-card-title">Customer</div>
-                                <div class="dashboard-card-subtitle">15,209</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card mb-2">
-                            <div class="card-body">
                                 <div class="dashboard-card-title">Revenue</div>
-                                <div class="dashboard-card-subtitle">$931,290</div>
+                                <div class="dashboard-card-subtitle">Rp. {{ number_format($revenue) }}</div>
                             </div>
                         </div>
                     </div>
@@ -32,60 +24,58 @@
                         <div class="card mb-2">
                             <div class="card-body">
                                 <div class="dashboard-card-title">Transaction</div>
-                                <div class="dashboard-card-subtitle">22,409,399</div>
+                                <div class="dashboard-card-subtitle">{{ number_format($total_transaction) }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <div class="dashboard-card-title">My Product</div>
+                                <div class="dashboard-card-subtitle">{{ number_format($total_product) }}</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-12 mt-2">
-                        <h5 class="mb-3">Recent Transactions</h5>
-                        <a class="card card-list d-block" href="/dashboard-transactions-details.html">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <img src="/images/dashboard-icon-product-1.png" alt="" />
-                                    </div>
-                                    <div class="col-md-4">Shirup Marzzan</div>
-                                    <div class="col-md-3">Angga Risky</div>
-                                    <div class="col-md-3">12 Januari, 2020</div>
-                                    <div class="col-md-1 d-none d-md-block">
-                                        <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="card card-list d-block" href="/dashboard-transactions-details.html">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <img src="/images/dashboard-icon-product-2.png" alt="" />
-                                    </div>
-                                    <div class="col-md-4">LeBrone X</div>
-                                    <div class="col-md-3">Masayoshi</div>
-                                    <div class="col-md-3">11 January, 2020</div>
-                                    <div class="col-md-1 d-none d-md-block">
-                                        <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        <a class="card card-list d-block" href="/dashboard-transactions-details.html">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <img src="/images/dashboard-icon-product-3.png" alt="" />
-                                    </div>
-                                    <div class="col-md-4">Soffa Lembutte</div>
-                                    <div class="col-md-3">Shayna</div>
-                                    <div class="col-md-3">11 January, 2020</div>
-                                    <div class="col-md-1 d-none d-md-block">
-                                        <img src="/images/dashboard-arrow-right.svg" alt="" />
+                    @foreach ($recent_transaction as $item)
+                        <div class="col-12 mt-2">
+                            <a class="card card-list d-block" href="{{ route('admin.transaction.show', $item->id) }}">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <img style="width:80px; height: 80px; object-fit: cover; object-position: center;"
+                                                class="cart-image rounded-3"src="{{ asset($item->transactionDetails[0]->product->galleries[0]->image) }}"
+                                                alt="" />
+                                        </div>
+                                        <div class="col-md-2">{{ $item->invoice_code }}</div>
+                                        <div class="col-md-2">{{ $item->user->name }}</div>
+                                        <div class="col-md-2">
+                                            <span>Status Pembayaran</span>
+                                            <br>
+                                            <span
+                                                class="text-uppercase @if ($item->payment_status === 'paid') text-success @endif @if ($item->payment_status === 'pending') text-warning @endif">
+                                                {{ $item->payment_status }}
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <span>Status Pengiriman</span>
+                                            <br>
+                                            <span
+                                                class="text-uppercase @if ($item->shipping_status === 'success') text-success @endif @if ($item->shipping_status === 'pending' or $item->shipping_status === 'shipping') text-warning @endif">
+                                                {{ $item->shipping_status }}
+                                            </span>
+                                        </div>
+                                        <div class="col-md-2">{{ $item->created_at }}</div>
+                                        <div class="col-md-1 d-none d-md-block">
+                                            <img src="/images/dashboard-arrow-right.svg" alt="" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

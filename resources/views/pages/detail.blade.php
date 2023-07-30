@@ -79,12 +79,20 @@
                             @endif
                         </div>
                         <div class="col-lg-2 text-center" data-aos="zoom-in">
-                            @if ($product->stock > 0)
+                            @if ($product->variants->isNotEmpty())
                                 <a class="btn btn-content px-4 text-white btn-block mb-3" data-bs-toggle="modal"
                                     data-bs-target="#addCartModal">Add to
                                     Cart
                                 </a>
+                            @else
+                                @if ($product->stock > 0)
+                                    <a class="btn btn-content px-4 text-white btn-block mb-3" data-bs-toggle="modal"
+                                        data-bs-target="#addCartModal">Add to
+                                        Cart
+                                    </a>
+                                @endif
                             @endif
+
                         </div>
                     </div>
                 </div>
@@ -154,9 +162,11 @@
 
                         @foreach ($product->variants as $item)
                             <label>
-                                <input type="radio" name="variant_id" class="card-input-variant" value="{{ $item->id }}">
+                                <input type="radio" name="variant_id" class="card-input-variant"
+                                    value="{{ $item->id }}" @click="setVariant({{ $item }})"
+                                    @disabled($item->stock == 0)>
                                 <div class="d-flex">
-                                    <div class="card card-variant">
+                                    <div class="card card-variant @if($item->stock == 0) bg-secondary @endif">
                                         <div class="card-body">
                                             {{ $item->name }}
                                         </div>
@@ -164,9 +174,15 @@
                                 </div>
                             </label>
                         @endforeach
+
+                        @error('variant_id')
+                            <div class="text-danger">
+                                <small>{{ $message }}</small>
+                            </div>
+                        @enderror
                     </div>
                     <hr style="margin-top: -5px !important">
-                    <div class="modal-body qty">
+                    <div id="qty-modal" class="modal-body qty @if (count($product->variants) > 0) d-none @endif">
                         <div class="d-flex justify-content-between">
                             <p>Jumlah</p>
                             <div class="d-flex gap-2">
@@ -275,6 +291,8 @@
                     if (this.qty.value < this.qty.max) {
                         this.qty.value++;
                     }
+
+                    console.log(this.qty.max)
                 },
                 decrement() {
                     if (this.qty.value > this.qty.min) {
@@ -284,6 +302,11 @@
 
                 closeModal() {
                     $('#addCartModal').modal('hide');
+                },
+
+                setVariant(variant) {
+                    this.qty.max = variant.stock;
+                    $(`#qty-modal`).removeClass('d-none');
                 }
             },
         });

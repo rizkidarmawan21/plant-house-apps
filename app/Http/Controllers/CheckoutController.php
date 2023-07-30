@@ -6,6 +6,7 @@ use App\Http\Requests\CheckoutRequest;
 use App\Models\Cart;
 use App\Models\City;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\TransactionShipping;
@@ -29,11 +30,34 @@ class CheckoutController extends Controller
 
     public function checkout(CheckoutRequest $request)
     {
+
+        // get data product from cart
+        $products = Cart::with(['product'])->where('user_id', auth()->id())->get();
+
+        // check stock
+        foreach ($products as $product) {
+            if ($product->variant) {
+                $productVariant = ProductVariant::findOrFail($product->product_variant_id);
+                if ($productVariant->stock < $product->quantity) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => "Maaf, stok pada produk ". $product->product->name ." ". $productVariant->name ." tidak mencukupi",
+                    ], 500);
+                }
+            } else {
+                if($product->product->stock < $product->quantity) {
+                    return response()->json([
+                        'status' => 'error',
+                        'message' => "Maaf, stok pada produk ". $product->product->name ." tidak mencukupi",
+                    ], 500);
+                }
+            }
+        }
         try {
 
             DB::beginTransaction();
-            // get data product from cart
-            $products = Cart::with(['product'])->where('user_id', auth()->id())->get();
+
+
 
             // get total price
             $total_price = 0;
@@ -91,10 +115,18 @@ class CheckoutController extends Controller
                 ];
                 TransactionDetail::create($transaction_detail_data);
 
-                // update stock product
-                Product::where('id', $product->product->id)->update([
-                    'stock' => $product->product->stock - $product->quantity,
-                ]);
+
+                if ($product->variant) {
+                    // update stock product variant
+                    $product->variant->update([
+                        'stock' => $product->variant->stock - $product->quantity,
+                    ]);
+                } else {
+                    // update stock product
+                    Product::where('id', $product->product->id)->update([
+                        'stock' => $product->product->stock - $product->quantity,
+                    ]);
+                }
             }
 
 
