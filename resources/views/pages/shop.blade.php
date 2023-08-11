@@ -149,9 +149,9 @@
                         @endforelse
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                            <button class="btn btn-see-all text-white rounded-3" type="button">
-                                LIHAT SEMUA PRODUK >
-                            </button>
+                            <a href="?perPage={{ $perPage + 20}}" class="btn btn-see-all text-white rounded-3 @if($perPage === $maxPerPage) disabled @endif" type="button">
+                                Tampilkan Lebih Banyak >
+                            </a>
                         </div>
                     </div>
                 </div>

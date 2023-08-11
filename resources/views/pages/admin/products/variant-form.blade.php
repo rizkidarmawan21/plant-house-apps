@@ -43,7 +43,7 @@
                                             <div class="form-group">
                                                 <label for="name">Name</label>
                                                 <input type="text" class="form-control" id="name"
-                                                    aria-describedby="name" name="name" value="{{ optional($variant)->name }}" />
+                                                    aria-describedby="name" name="name" value="{{ isset($variant) ? $variant->name : "" }}" />
                                                 @error('name')
                                                     <div class="text-danger">
                                                         <small>{{ $message }}</small>
@@ -56,7 +56,7 @@
                                             <div class="form-group">
                                                 <label for="price">Price</label>
                                                 <input type="number" class="form-control" id="price"
-                                                    aria-describedby="price" name="price" value="{{  optional($variant)->price }}" />
+                                                    aria-describedby="price" name="price" value="{{ isset($variant) ? $variant->price : "" }}" />
                                                 @error('price')
                                                     <div class="text-danger">
                                                         <small>{{ $message }}</small>
@@ -68,7 +68,7 @@
                                             <div class="form-group">
                                                 <label for="stock">Stock</label>
                                                 <input type="number" class="form-control" id="stock"
-                                                    aria-describedby="stock" name="stock" value="{{  optional($variant)->stock }}" />
+                                                    aria-describedby="stock" name="stock" value="{{ isset($variant) ? $variant->stock : "" }}" />
                                                 @error('stock')
                                                     <div class="text-danger">
                                                         <small>{{ $message }}</small>
@@ -81,7 +81,7 @@
                                                 <label for="weight">Berat (Satuan Gram)</label>
                                                 <input type="number" class="form-control" id="weight"
                                                     aria-describedby="weight" name="weight"
-                                            value="{{  optional($variant)->weight }}" />
+                                            value="{{ isset($variant) ? $variant->weight : "" }}" />
                                                 @error('weight')
                                                     <div class="text-danger">
                                                         <small>{{ $message }}</small>

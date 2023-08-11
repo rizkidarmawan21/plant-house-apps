@@ -119,8 +119,14 @@
                             <ul class="list-unstyled">
                                 @foreach ($product->reviews as $item)
                                     <li class="media mb-3">
-                                        <img src="/images/icon-testimonial-1.png" class="me-3 rounded-circle"
-                                            alt="" />
+                                        @if ($item->user->photo)
+                                            <img src="{{ asset($item->user->photo) }}" class="me-3 rounded-circle"
+                                                alt="" style="width: 40px; height:40px; background-size: cover" />
+                                        @else
+                                            <img src="{{ asset('images/icon-user.png') }}" class="me-3 rounded-circle"
+                                                alt="" style="width: 40px; height:40px; background-size: cover" />
+                                        @endif
+
                                         <div class="media-body">
                                             <h5 class="mt-2 mb-1">{{ $item->user->name }}</h5>
                                             {{ $item->messages }}
@@ -156,31 +162,34 @@
                             </div>
                         </div>
                     </div>
-                    <hr style="margin-top: -10px !important">
-                    <div class="modal-body">
-                        <p>Variasi :</p>
+                    @if ($product->variants->isNotEmpty())
+                        <hr style="margin-top: -10px !important">
+                        <div class="modal-body">
+                            <p>Variasi :</p>
 
-                        @foreach ($product->variants as $item)
-                            <label>
-                                <input type="radio" name="variant_id" class="card-input-variant"
-                                    value="{{ $item->id }}" @click="setVariant({{ $item }})"
-                                    @disabled($item->stock == 0)>
-                                <div class="d-flex">
-                                    <div class="card card-variant @if($item->stock == 0) bg-secondary @endif">
-                                        <div class="card-body">
-                                            {{ $item->name }}
+                            @foreach ($product->variants as $item)
+                                <label>
+                                    <input type="radio" name="variant_id" class="card-input-variant"
+                                        value="{{ $item->id }}" @click="setVariant({{ $item }})"
+                                        @disabled($item->stock == 0)>
+                                    <div class="d-flex">
+                                        <div
+                                            class="card card-variant @if ($item->stock == 0) bg-secondary @endif">
+                                            <div class="card-body">
+                                                {{ $item->name }}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </label>
-                        @endforeach
+                                </label>
+                            @endforeach
 
-                        @error('variant_id')
-                            <div class="text-danger">
-                                <small>{{ $message }}</small>
-                            </div>
-                        @enderror
-                    </div>
+                            @error('variant_id')
+                                <div class="text-danger">
+                                    <small>{{ $message }}</small>
+                                </div>
+                            @enderror
+                        </div>
+                    @endif
                     <hr style="margin-top: -5px !important">
                     <div id="qty-modal" class="modal-body qty @if (count($product->variants) > 0) d-none @endif">
                         <div class="d-flex justify-content-between">

@@ -40,8 +40,12 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown">
-                                <img src="/images/icon-user.png" alt="user"
-                                    class="rounded-circle me-2 profile-picture" />
+                                @if (auth()->user()->photo)
+                                <img src="{{ asset(auth()->user()->photo) }}" alt="user"
+                                    class="rounded-circle me-2 profile-picture" style="width: 40px; height:40px; background-size: cover" />
+                                @else
+                                <img src="https://cdn5.vectorstock.com/i/1000x1000/73/54/blank-photo-icon-vector-29557354.jpg" alt="user" class="rounded-circle me-2 profile-picture" style="width: 40px; height:40px; background-size: cover" />
+                                @endif
                                 Hi, {{ auth()->user()->name }}
                             </a>
                             <ul class="dropdown-menu">
@@ -49,7 +53,7 @@
                                     <a href="{{ route('user.transaction.index') }}" class="dropdown-item">My Transactions</a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard-account.html" class="dropdown-item">Settings</a>
+                                    <a href="{{ route('user.profile') }}" class="dropdown-item">Settings</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider" />
@@ -79,16 +83,33 @@
                     <!-- mobile -->
                     <ul class="navbar-nav d-block d-lg-none">
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-white"> Hi, Roy </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link d-inline-block text-white"> Cart </a>
-                        </li>
-                        <li>
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown">
+                            @if (auth()->user()->photo)
+                            <img src="{{ asset(auth()->user()->photo) }}" alt="user"
+                                class="rounded-circle me-2 profile-picture" style="width: 40px; height:40px; background-size: cover" />
+                            @else
+                            <img src="https://cdn5.vectorstock.com/i/1000x1000/73/54/blank-photo-icon-vector-29557354.jpg" alt="user" class="rounded-circle me-2 profile-picture" style="width: 40px; height:40px; background-size: cover" />
+                            @endif
+                            Hi, {{ auth()->user()->name }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="{{ route('user.transaction.index') }}" class="dropdown-item">My Transactions</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('user.profile') }}" class="dropdown-item">Settings</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
                         </li>
                     </ul>
 

@@ -36,7 +36,8 @@ class CartController extends Controller
                 'quantity' => 'required|integer'
             ];
 
-        if ($product->variants) {
+        if ($product->variants->isNotEmpty()) {
+
             $rules = [
                 'variant_id' => 'required'
             ];
@@ -45,7 +46,7 @@ class CartController extends Controller
         $request->validate($rules);
         
         // check if variant id send from request
-        if ($product->variants) {
+        if ($product->variants->isNotEmpty()) {
             // if product variant ready check stock is ready or not
             $productVariant = ProductVariant::findOrFail($variant_id);
             if ($productVariant->stock == 0) {

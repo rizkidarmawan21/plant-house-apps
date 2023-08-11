@@ -10,18 +10,18 @@
         <br>
         <div class="container">
             <div class="row align-items-start">
-                <div class="col-3">
+                <div class="col-md-3">
                     <div class="d-flex justify-content-center">
                         @if (auth()->user()->photo)
                             <img src="{{ auth()->user()->photo }}"
-                                alt="Foto Profil" class="picture-pic rounded-circle" style="width: 200px; height:200px" />
+                                alt="Foto Profil" class="picture-pic rounded-circle" style="width: 200px; height:200px; background-size: cover" />
                         @else
                             <img src="https://cdn5.vectorstock.com/i/1000x1000/73/54/blank-photo-icon-vector-29557354.jpg"
                                 alt="Foto Profil" class="picture-pic rounded-circle" style="width: 200px; height:200px" />
                         @endif
                     </div>
                 </div>
-                <div class="col-9">
+                <div class="col-md-9">
                     <div class="row mb-5">
                         <div class="col-12">
                             <form action="" method="POST" enctype="multipart/form-data">

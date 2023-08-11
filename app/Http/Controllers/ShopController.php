@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Admin\Transaction;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\TransactionDetail;
@@ -20,8 +19,14 @@ class ShopController extends Controller
     {
 
         $search  =  $request->search;
+        $perPage = $request->query('perPage', 20);
+        $page = $request->query('page', 1);
 
+        $maxPerPage = Product::count();
 
+        if($perPage > $maxPerPage){
+            $perPage = $maxPerPage;
+        }
 
         // get most popular to buy
         $most_popular = TransactionDetail::with(['transaction.user', 'product.galleries'])
@@ -37,8 +42,6 @@ class ShopController extends Controller
         $products = Product::with(['galleries', 'category']);
 
         $products->when(request('search', false), function ($query) use ($search) {
-            // $query->where('name', 'like', '%' . $search . '%');
-            // make where like name, and category name
             $query->where(function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhereHas('category', function ($query) use ($search) {
@@ -47,9 +50,9 @@ class ShopController extends Controller
             });
         });
 
-        $products = $products->paginate(12);
+        $products = $products->paginate($perPage, ['*'], 'page', $page);
         
 
-        return view('pages.shop', compact('products', 'most_popular', 'categories'));
+        return view('pages.shop', compact('products', 'most_popular', 'categories','perPage','maxPerPage'));
     }
 }

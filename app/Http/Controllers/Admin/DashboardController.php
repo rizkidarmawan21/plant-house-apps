@@ -14,8 +14,7 @@ class DashboardController extends Controller
         // total product
         $total_product = Product::count();
         // total transaction
-        $total_transaction = Transaction::count();
-
+        $total_transaction = Transaction::where('payment_status', 'PAID')->count();
         // total revenue
         $transaction = Transaction::with(['transactionShipping'])->get();
 
